@@ -3,7 +3,7 @@
 @font-face {
     font-family: 'sora';
     font-display: swap;
-    src: url(/src/lib/assets/fonts/Sora.ttf) format('truetype');
+    src: url(/assets/fonts/Sora.ttf) format('truetype');
 }
 
 @theme {
