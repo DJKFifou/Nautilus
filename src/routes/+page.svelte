@@ -96,9 +96,6 @@
 		};
 	});
 
-
-
-
 	onDestroy(() => {
 		if (browser) window.removeEventListener('resize', handleResize);
 	});
@@ -106,7 +103,7 @@
 
 
 <div class="relative h-dvh w-full">
-	<video bind:this={video} onclick={toggleVideo} oncanplay={handleLoaded} onloadeddata={handleLoaded} src="video.mp4" autoplay loop muted playsinline class="video h-full w-full object-cover bg-black"></video>
+	<video bind:this={video} onclick={toggleVideo} oncanplay={handleLoaded} onloadeddata={handleLoaded} src="/assets/motion.mp4" autoplay loop muted playsinline class="video h-full w-full object-cover bg-black"></video>
 
 	<h1 class="absolute left-1/2 top-6.5 -translate-x-1/2 p-4 md:px-8 z-50 md:text-2xl text-white uppercase border-[0.5px] border-white rounded-lg md:rounded-2xl bg-white/1 backdrop-blur-[6px] font-title text-trim font-extrabold">
 		Nautilus
