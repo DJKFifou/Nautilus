@@ -1,1 +1,15 @@
 @import 'tailwindcss';
+
+@font-face {
+    font-family: 'sora';
+    font-display: swap;
+    src: url(/src/lib/assets/fonts/Sora.ttf) format('truetype');
+}
+
+@theme {
+    --font-title: 'sora', sans-serif;
+}
+
+.text-trim {
+    text-box-trim: trim-both;
+}
