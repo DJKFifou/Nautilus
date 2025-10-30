@@ -8,6 +8,8 @@
 
 @theme {
     --font-title: 'sora', sans-serif;
+    --color-green: #B4FF00;
+
 }
 
 .text-trim {

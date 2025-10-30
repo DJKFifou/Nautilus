@@ -7,15 +7,18 @@
 	let sound: HTMLImageElement | null = null;
 	let isWide = false;
 	let isLoading: boolean = true;
+	let videoDuration: number | null = null;
+	let videoTime: number | null = null;
 
 	if (browser) isWide = window.innerWidth > 768;
 
 	const paliers = [
-		{ id: 1, name: "Calme", time: 0 },
-		{ id: 2, name: "Agitation", time: 3.5 },
-		{ id: 3, name: "Solitude", time: 7 },
-		{ id: 4, name: "Étouffement", time: 10.5 },
-		{ id: 5, name: "Infinité", time: 14 }
+		{ id: 1, name: "Intro", deep: "0m", time: 0 },
+		{ id: 2, name: "Calme", deep: "-40m", time: 21 },
+		{ id: 3, name: "Agitation", deep: "-200m", time: 39 },
+		{ id: 4, name: "Solitude", deep: "-1000m", time: 49 },
+		{ id: 5, name: "Étouffement", deep: "-4000m", time: 64 },
+		{ id: 6, name: "Infinité", deep: "-11000m", time: 78 }
 	];
 
 	function changeCurrentTime(time: number): void {
@@ -79,20 +82,29 @@
 
 		window.addEventListener('resize', handleResize);
 
+		let frameId: number;
 		const timeout = setTimeout(() => {
 			if (isLoading) isLoading = false;
 		}, 2000);
 
-		(async () => {
-			if (video) {
-				await waitForVideoReady(video);
-				isLoading = false;
+		const animate = () => {
+			if (video && video.duration) {
+				videoTime = video.currentTime;
+				videoDuration = video.duration;
 			}
-		})();
+			frameId = requestAnimationFrame(animate);
+		};
+
+		waitForVideoReady(video!).then(() => {
+			isLoading = false;
+			videoDuration = video!.duration;
+			frameId = requestAnimationFrame(animate);
+		});
 
 		return () => {
 			clearTimeout(timeout);
 			window.removeEventListener('resize', handleResize);
+			cancelAnimationFrame(frameId);
 		};
 	});
 
@@ -113,15 +125,24 @@
 		<img bind:this={sound} src="/assets/svg/sound-muted.svg" alt="" class="h-4 w-4">
 	</button>
 
-	<div onclick={openMenu} class="absolute left-3.5 md:left-1/2 bottom-3.5 md:bottom-7 md:-translate-x-1/2 z-50 md:w-full md:px-13 text-xl text-white uppercase font-title cursor-pointer md:cursor-auto transition-all duration-500 ease-out {menuOpen ? 'max-w-fit' : 'max-w-8'} md:max-w-full">
-		<div class="relative flex flex-col md:flex-row items-center justify-between gap-8 w-full bg-white/1 backdrop-blur-[6px] px-4 py-6 md:px-8 md:py-4 border-[0.5px] border-white rounded-lg md:rounded-2xl overflow-hidden">
+	<div onclick={openMenu} class="absolute left-6 md:left-1/2 bottom-3 md:bottom-7 md:-translate-x-1/2 z-50 flex md:w-full md:px-13 text-xl text-white uppercase font-title cursor-pointer md:cursor-auto transition-all duration-500 ease-out {menuOpen ? 'max-w-fit' : 'max-w-8'}">
+		<div class="relative -left-5 my-3.5">
+			<span class="absolute min-h-4 min-w-4 max-h-4 max-w-4 bg-green rounded-full transition-all duration-150 ease-linear" style={`top: ${(videoTime / videoDuration) * 100}%;`}></span>
+		</div>
+		<span class="grid min-w-2.5 h-auto my-3.5 border-[0.5px] border-white *:even:bg-white" style={`grid-template-rows: repeat(${paliers.length}, minmax(0, 1fr));`}>
+			{#each paliers as palier (palier.id)}
+				<span></span>
+			{/each}
+		</span>
+		<div class="relative flex flex-col md:flex-row items-start justify-between gap-5 w-full px-4 py-6 md:px-8 md:py-4 overflow-hidden">
 			<img src="/assets/svg/caret.svg" class="md:hidden absolute left-1/2 top-1/2 -translate-1/2 all duration-300 ease-out {menuOpen ? 'translate-x-20' : '-translate-x-1/2'}">
 			{#each paliers as palier (palier.id)}
 				<button
-					class="cursor-pointer transform transition-all duration-500 ease-out
+					class="flex flex-col items-start cursor-pointer transform transition-all duration-500 ease-out
 					{menuOpen || isWide ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8 pointer-events-none'}"
 					onclick={() => changeCurrentTime(palier.time)}>
 					{palier.name}
+					<span class="text-sm font-light">{palier.deep}</span>
 				</button>
 			{/each}
 		</div>
