@@ -115,7 +115,7 @@
 
 
 <div class="relative h-dvh w-full">
-	<video bind:this={video} onclick={toggleVideo} oncanplay={handleLoaded} onloadeddata={handleLoaded} src="/assets/motion.mp4" autoplay loop muted playsinline class="video h-full w-full object-cover bg-black"></video>
+	<video bind:this={video} onclick={toggleVideo} oncanplay={handleLoaded} onloadeddata={handleLoaded} src="/assets/motion.mp4" autoplay loop muted playsinline class="video h-full w-full bg-black"></video>
 
 	<h1 class="absolute left-1/2 top-6.5 -translate-x-1/2 p-4 md:px-8 z-50 md:text-2xl text-white uppercase border-[0.5px] border-white rounded-lg md:rounded-2xl bg-white/1 backdrop-blur-[6px] font-title text-trim font-extrabold">
 		Nautilus
@@ -125,7 +125,7 @@
 		<img bind:this={sound} src="/assets/svg/sound-muted.svg" alt="" class="h-4 w-4">
 	</button>
 
-	<div onclick={openMenu} class="absolute left-6 md:left-1/2 bottom-3 md:bottom-7 md:-translate-x-1/2 z-50 flex md:w-full md:px-13 text-xl text-white uppercase font-title cursor-pointer md:cursor-auto transition-all duration-500 ease-out {menuOpen ? 'max-w-fit' : 'max-w-8'}">
+	<div onclick={openMenu} class="absolute left-6 md:left-8 bottom-3 z-50 flex md:w-full text-xl text-white uppercase font-title cursor-pointer md:cursor-auto transition-all duration-500 ease-out {menuOpen ? 'max-w-fit' : 'max-w-8'}">
 		<div class="relative -left-5 my-3.5">
 			<span class="absolute min-h-4 min-w-4 max-h-4 max-w-4 bg-green rounded-full transition-all duration-150 ease-linear" style={`top: ${(videoTime / videoDuration) * 100}%;`}></span>
 		</div>
@@ -134,7 +134,7 @@
 				<span></span>
 			{/each}
 		</span>
-		<div class="relative flex flex-col md:flex-row items-start justify-between gap-5 w-full px-4 py-6 md:px-8 md:py-4 overflow-hidden">
+		<div class="relative flex flex-col items-start justify-between gap-5 w-full px-4 py-6 md:px-8 md:py-4 overflow-hidden md:overflow-visible">
 			<img src="/assets/svg/caret.svg" class="md:hidden absolute left-1/2 top-1/2 -translate-1/2 all duration-300 ease-out {menuOpen ? 'translate-x-20' : '-translate-x-1/2'}">
 			{#each paliers as palier (palier.id)}
 				<button
