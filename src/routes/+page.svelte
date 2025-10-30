@@ -126,7 +126,7 @@
 	</button>
 
 	<div onclick={openMenu} class="absolute left-6 md:left-8 bottom-3 z-50 flex md:w-full text-xl text-white uppercase font-title cursor-pointer md:cursor-auto transition-all duration-500 ease-out {menuOpen ? 'max-w-fit' : 'max-w-8'}">
-		<div class="relative -left-5 my-3.5">
+		<div class="relative -left-5 mt-3.5 mb-7">
 			<span class="absolute min-h-4 min-w-4 max-h-4 max-w-4 bg-green rounded-full transition-all duration-150 ease-linear" style={`top: ${(videoTime / videoDuration) * 100}%;`}></span>
 		</div>
 		<span class="grid min-w-2.5 h-auto my-3.5 border-[0.5px] border-white *:even:bg-white" style={`grid-template-rows: repeat(${paliers.length}, minmax(0, 1fr));`}>
